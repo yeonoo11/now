@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>귤나무 숫자 버튼</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      text-align: center;
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      color: #3a2a12;
+      background: linear-gradient(#bfe6ff 0%, #e9f7ff 100%);
+    }
+    h1 { margin: 0 0 4px; font-size: 1.8rem; }
+    p { margin: 0 0 20px; color: #6b5b45; }
+    #grove {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .tree-box { display: flex; flex-direction: column; align-items: center; }
+    .tree-box svg { width: 100%; max-width: 170px; height: auto; }
+    button {
+      margin-top: 4px;
+      padding: 8px 22px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: #fff;
+      background: #f08a12;
+      border: 2px solid #d2620a;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    button:hover { background: #ff9f1a; }
+    button:active { transform: scale(.95); }
+  </style>
+</head>
+<body>
+  <h1>🍊 귤나무 숫자 버튼</h1>
+  <p>나무 아래 버튼을 눌러 보세요!</p>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="tree" viewBox="0 0 400 400">
+        <ellipse cx="200" cy="372" rx="150" ry="16" fill="#8bc47f"/>
+        <rect x="178" y="220" width="44" height="150" rx="10" fill="#8a5a2b"/>
+        <circle cx="200" cy="150" r="115" fill="#3f9a4a"/>
+        <circle cx="130" cy="190" r="70" fill="#4aa854"/>
+        <circle cx="270" cy="190" r="70" fill="#4aa854"/>
+        <circle cx="200" cy="100" r="70" fill="#52b05c"/>
+        <g id="fruit-set"></g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div id="grove"></div>
+
+  <script>
+    const NS = "http://www.w3.org/2000/svg";
+    const POSITIONS = [
+      [150, 120], [215, 80], [265, 135], [110, 175],
+      [195, 160], [285, 195], [150, 225], [230, 215]
+    ];
+    const fruitMarkup = POSITIONS.map(([x, y]) =>
+      `<circle cx="${x}" cy="${y}" r="17" fill="#ff9f1a" stroke="#e8760c" stroke-width="2"/>` +
+      `<ellipse cx="${x - 5}" cy="${y - 6}" rx="4" ry="2.5" fill="#ffd28a"/>` +
+      `<path d="M${x} ${y - 17} q6 -6 12 -2 q-6 6 -12 2z" fill="#2f7d32"/>`
+    ).join("");
+    document.getElementById("fruit-set").innerHTML = fruitMarkup;
+
+    const grove = document.getElementById("grove");
+    for (let i = 1; i <= 10; i++) {
+      const box = document.createElement("div");
+      box.className = "tree-box";
+      box.innerHTML =
+        `<svg viewBox="0 0 400 400" role="img" aria-label="귤나무 ${i}번"><use href="#tree"/></svg>` +
+        `<button>${i}번</button>`;
+      box.querySelector("button").onclick = () => alert(i);
+      grove.appendChild(box);
+    }
+  </script>
+</body>
+</html>
